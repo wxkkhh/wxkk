@@ -47,6 +47,19 @@ void solve() {
   for (int i = 0; i < n; i ++ ) 
     if (E[i].empty()) q0.push_back(i);
     else if (*E[i].begin() > i) p.emplace_back(i, *E[i].begin());
+  if (!p.empty()) {
+    auto [x, y] = p.back();
+    p.pop_back();
+    for (auto u : q0) {
+      ops.emplace_back(x, y, u);
+      y = u;
+    }
+    for (auto [u, v] : p) {
+      ops.emplace_back(y, u, v);
+    }
+  } 
+  cout << ops.size() << endl;
+  for (auto [x, y, z] : ops) cout << x+1 << " " << y+1 << " " << z+1 << " " << endl;
 }
 
 int main() {
