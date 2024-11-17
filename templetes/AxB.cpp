@@ -34,6 +34,11 @@ void solve()
 {
     string s1, s2;
     cin >> s1 >> s2;
+    bool flag1 = false, flag2 = false;
+    if (s1[0] == '-')
+        flag1 = true, s1[0] = '0';
+    if (s2[0] == '-')
+        flag2 = true, s2[0] = '0';
     int n = s1.size(), m = s2.size();
     int pown = 1;
     while (pown < n + m)
@@ -73,6 +78,8 @@ void solve()
     }
     if (!started)
         result = "0";
+    if (flag1 ^ flag2 && result != "0")
+        cout << "-";
     cout << result;
 }
 
