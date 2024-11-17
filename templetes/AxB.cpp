@@ -9,6 +9,7 @@ using namespace std;
 #define endl '\n'
 #define FOR(i, l, r) for (int i = (l); i <= (r); i++)
 const double PI = acos(-1);
+
 void FFT(vector<cp> &p, int n, int inv)
 {
     if (n == 1)
@@ -28,16 +29,20 @@ void FFT(vector<cp> &p, int n, int inv)
         w *= wn;
     }
 }
+
 void solve()
 {
-    int n, m, tmp, pown;
-    cin >> n >> m;
-    pown = 1 << (int)ceil(log2(n + m));
-    vector<cp> a(pown), b(pown), c(pown);
+    string s1, s2;
+    cin >> s1 >> s2;
+    int n = s1.size(), m = s2.size();
+    int pown = 1;
+    while (pown < n + m)
+        pown <<= 1;
+    vector<cp> a(pown, 0), b(pown, 0), c(pown, 0);
     FOR(i, 0, n - 1)
-    cin >> tmp, a[i] = cp(tmp, 0);
+    a[i] = cp(s1[n - 1 - i] - '0', 0);
     FOR(i, 0, m - 1)
-    cin >> tmp, b[i] = cp(tmp, 0);
+    b[i] = cp(s2[m - 1 - i] - '0', 0);
     FFT(a, pown, 1);
     FFT(b, pown, 1);
     FOR(i, 0, pown - 1)
@@ -45,10 +50,30 @@ void solve()
     FFT(c, pown, -1);
     FOR(i, 0, pown - 1)
     c[i] /= pown;
-    ll sum = 0;
+
+    vector<int> ans(pown, 0);
     FOR(i, 0, pown - 1)
-    sum += (ll)(c[i].real() + 1e-5);
-    cout << sum;
+    ans[i] = round(c[i].real());
+
+    int carry = 0;
+    FOR(i, 0, pown - 1)
+    {
+        int total = ans[i] + carry;
+        ans[i] = total % 10;
+        carry = total / 10;
+    }
+    string result = "";
+    bool started = false;
+    for (int i = pown - 1; i >= 0; i--)
+    {
+        if (ans[i] != 0)
+            started = true;
+        if (started)
+            result += to_string(ans[i]);
+    }
+    if (!started)
+        result = "0";
+    cout << result;
 }
 
 int main()
