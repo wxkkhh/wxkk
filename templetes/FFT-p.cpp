@@ -7,9 +7,9 @@ using namespace std;
 #define ld long double
 #define cp complex<ld>
 #define endl '\n'
-#define FOR(i, l, r) for (int i = (l); i <= (r); i++)
+#define FOR(i, l, r) for (ll i = (l); i <= (r); i++)
 const double PI = acos(-1);
-void FFT(vector<cp> &p, int n, int inv)
+void FFT(vector<cp> &p, ll n, ll inv)
 {
     if (n == 1)
         return;
@@ -30,14 +30,21 @@ void FFT(vector<cp> &p, int n, int inv)
 }
 void solve()
 {
-    int n, m, tmp, pown;
+    ll n, m, tmp, pown = 1;
     cin >> n >> m;
-    pown = 1 << (int)ceil(log2(n + m));
-    vector<cp> a(pown), b(pown), c(pown);
+    while (pown < n + m)
+        pown <<= 1;
+    vector<cp> a(pown, 0), b(pown, 0), c(pown, 0);
     FOR(i, 0, n - 1)
-    cin >> tmp, a[i] = cp(tmp, 0);
+    {
+        cin >> tmp;
+        a[i] = cp(tmp, 0);
+    }
     FOR(i, 0, m - 1)
-    cin >> tmp, b[i] = cp(tmp, 0);
+    {
+        cin >> tmp;
+        b[i] = cp(tmp, 0);
+    }
     FFT(a, pown, 1);
     FFT(b, pown, 1);
     FOR(i, 0, pown - 1)
@@ -47,7 +54,7 @@ void solve()
     c[i] /= pown;
     ll sum = 0;
     FOR(i, 0, pown - 1)
-    sum += (ll)(c[i].real() + 1e-5);
+    sum += (ll)round(c[i].real());
     cout << sum;
 }
 
@@ -55,7 +62,7 @@ int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0), cout.tie(0);
-    int T = 1;
+    ll T = 1;
     // cin >> T;
     while (T--)
     {
