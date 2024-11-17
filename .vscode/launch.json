@@ -1,89 +1,105 @@
-
 {
   "version": "0.2.0",
   "configurations": [
     {
-        "name": "(gdb) Launch",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
-        "args": [],
-        "stopAtEntry": false,
-        "cwd": "${fileDirname}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "gdb",
-        "miDebuggerPath": "D:\\MinGw\\bin\\gdb.exe",
-        "setupCommands": [
-            {
-                "description": "Enable pretty-printing for gdb",
-                "text": "-enable-pretty-printing",
-                "ignoreFailures": true
-            },
-            {
-                "description": "Set Disassembly Flavor to Intel",
-                "text": "-gdb-set disassembly-flavor intel",
-                "ignoreFailures": true
-            }
-        ]
+      "name": "(gdb) Launch",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "D:\\MinGw\\bin\\gdb.exe",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Set Disassembly Flavor to Intel",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        }
+      ]
     },
-  
-      {
-          "name": "编译",
-          "type": "cppvsdbg",
-          "request": "launch",
-          "program": "cmd",
-          "args": [
-              "/C"
-          ],
-          "stopAtEntry": false,
-          "cwd": "${fileDirname}",
-          "environment": [],
-          "console": "internalConsole",
-          "internalConsoleOptions": "neverOpen",
-          "preLaunchTask": "C/C++: g++.exe build active file"
-      },
-      {
-          "name": "编译并执行",
-          "type": "cppvsdbg",
-          "request": "launch",
-          "program": "cmd",
-          "args": [
-              "/C",
-              "${fileDirname}/${fileBasenameNoExtension}.exe"
-          ],
-          "stopAtEntry": false,
-          "cwd": "${fileDirname}",
-          "environment": [],
-          "console": "integratedTerminal",
-          "preLaunchTask": "C/C++: g++.exe build active file"
-      },
-
-      {
-          "name": "Debug",
-          "type": "cppdbg",
-          "request": "launch",
-          "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
-          "args": [],
-          "stopAtEntry": false,
-          "cwd": "E:\\Develop\\mingw64\\bin",
-          "environment": [],
-          "externalConsole": true,
-          "MIMode": "gdb",
-          "miDebuggerPath": "E:\\Develop\\mingw64\\bin\\gdb.exe",
-          "setupCommands": [
-              {
-                  "description": "为 gdb 启用整齐打印",
-                  "text": "-enable-pretty-printing",
-                  "ignoreFailures": true
-              },
-              {
-                  "description": "将反汇编风格设置为 Intel",
-                  "text": "-gdb-set disassembly-flavor intel",
-                  "ignoreFailures": true
-              }
-          ],
-          "preLaunchTask": "C/C++: g++.exe build active file"
-      }
+    {
+      "name": "编译",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "cmd",
+      "args": [
+        "/C"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "console": "internalConsole",
+      "internalConsoleOptions": "neverOpen",
+      "preLaunchTask": "C/C++: g++.exe build active file"
+    },
+    {
+      "name": "编译并执行",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "cmd",
+      "args": [
+        "/C",
+        "${fileDirname}/${fileBasenameNoExtension}.exe"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "console": "integratedTerminal",
+      "preLaunchTask": "C/C++: g++.exe build active file"
+    },
+    {
+      "name": "Debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "E:\\Develop\\mingw64\\bin",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerPath": "E:\\Develop\\mingw64\\bin\\gdb.exe",
+      "setupCommands": [
+        {
+          "description": "为 gdb 启用整齐打印",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "将反汇编风格设置为 Intel",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "C/C++: g++.exe build active file"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/LangQi-Pro/Desktop/github/wxkk-CODE",
+      "program": "c:/Users/LangQi-Pro/Desktop/github/wxkk-CODE/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
   ]
 }
