@@ -78,16 +78,16 @@ int main() {
   
   int t = 0;
   for (int i = n+m-2; ~i; i -- ) t += (ans[i] == 0);
-  if (t == n+m-1 && cnt&1) {
+  if (t == n+m-1) {
     cout << 0 << endl;
     return 0;
   }
   else if (cnt&1) cout << "-";
-  vector<int> finalans(n+m-1);
+  vector<LL> finalans(n+m-1);
   for (int i = 0; i < n+m-1; i ++ ) 
     for (int j = 0; ans[i]; j ++ ) 
       finalans[i+j] = ans[i]%10, ans[i] /= 10;
-  for (int i = n+m-1, flag = 1; ~i; i -- )
+  for (int i = n+m-2, flag = 1; ~i; i -- )
     if (flag && finalans[i] == 0) continue;
     else cout << finalans[i];
   cout << endl;
