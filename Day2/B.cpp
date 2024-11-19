@@ -83,13 +83,20 @@ int main() {
     return 0;
   }
   else if (cnt&1) cout << "-";
-  vector<LL> finalans(n+m-1);
-  for (int i = 0; i < n+m-1; i ++ ) 
-    for (int j = 0; ans[i]; j ++ ) 
-      finalans[i+j] = ans[i]%10, ans[i] /= 10;
-  for (int i = n+m-2, flag = 1; ~i; i -- )
-    if (flag && finalans[i] == 0) continue;
-    else cout << finalans[i];
+  // vector<LL> finalans(n+m-1, 0);
+  ans.resize(n+m+10);
+  for (int i = 0; i < n+m; i ++ ) {
+    LL t = ans[i];
+    ans[i] = t % 10;
+    t /= 10;
+    for (int j = 1; t; j ++ , t /= 10)
+      ans[i+j] += t % 10;
+  }
+  // for (auto x : ans) cout << x << " ";
+  // cout << endl;
+  for (int i = n+m-1, flag = 1; ~i; i -- )
+    if (flag && ans[i] == 0) continue;
+    else cout << ans[i], flag = 0;
   cout << endl;
   return 0;
 }
