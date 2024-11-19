@@ -66,9 +66,10 @@ int main() {
     return ans;
   };
 
-  array<vector<int>, 6> p;
-  for (int t = 0; t < 6; t ++ ) 
-    for (int i = 0; i < n; i ++ ) p[t][i] = i;
+  vector<vector<int>> p(n, vector<int>(6));
+  for (int i = 0; i < n; i ++ ) 
+    for (int j = 0; j < 6; j ++ ) 
+      p[i][j] = j;
   vector<int> ans(n, 0);
   for (int i = 0; i < 6; i ++ )   
     for (int j = 0; j < 6; j ++ ) 
@@ -76,9 +77,9 @@ int main() {
         auto A = get(S, i), B = get(T, j);
         auto C = multiply(A, B);
         for (int t = 0; t < n; t ++ ) 
-          if (C[i]) {
-            if (find(p[i], t) != find(p[j], t)) 
-              p[i][find(p[i], t)] = find(p[j], t), ans[t] ++ ;
+          if (C[t]) {
+            if (find(p[t], i) != find(p[t], j)) 
+              p[t][find(p[t], i)] = find(p[t], j), ans[t] ++ ;
           }
       }
   for (int i = m-1; i < n; i ++ ) cout << ans[i] << endl;
