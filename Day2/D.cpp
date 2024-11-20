@@ -3,6 +3,9 @@
 using namespace std;
 
 const int mod = 786433;
+const int g = 10;
+const int _g = 235930;
+
 
 int pw(int x, int k, int mod) {
   int ans = 1;
@@ -12,21 +15,5 @@ int pw(int x, int k, int mod) {
 }
 
 int main() {
-  int t = 2;
-  while (t < mod) {
-    map<int, int> mp;
-    mp[1] = 1;
-    bool flag = 1;
-    for (int i = 1; i < mod; i ++ ) 
-      if (mp[pw(t, i, mod)]) {
-        flag = 0;
-        break;
-      }else mp[pw(t, i, mod)] = 1;
-    if (flag) {
-      cout << t << endl;
-      break;
-    }
-    t ++ ;
-  }
   return 0;
 }
