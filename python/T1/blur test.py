@@ -21,7 +21,7 @@ def detect_blur(image_path, threshold=100):
     return is_blurry, laplacian_var
 
 # 测试代码
-image_path = "d:\GitHub\wxkk\python\\image_160.png"  # 替换为你的图像路径
+image_path = "d:\GitHub\wxkk\python\\T1\\image_018.png"  # 替换为你的图像路径
 is_blurry, laplacian_var = detect_blur(image_path)
 
 if is_blurry:

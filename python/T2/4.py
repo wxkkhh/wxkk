@@ -49,7 +49,7 @@ image = cv2.imread('d:\\GitHub\\wxkk\\python\\T2\\normal4.jpg')  # 加载图像
 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # 转换为RGB格式
 
 # 设置一个假设的深度值，表示在水下的某一层
-depth = 10  # 假设深度为10米
+depth = 5  # 假设深度为10米
 
 # 使用水下成像散射模型对图像进行变换
 image_underwater = apply_scattering_effect(image_rgb, depth)
