@@ -78,7 +78,7 @@ def apply_blur_model(image, rho=0.5, depths=GLOBAL_DEPTH):
     return images
 
 # 读取图像
-image_path = 'd:\\GitHub\\wxkk\\python\\T1\\aaa.jpg'  # 替换为你的图像路径
+image_path = 'D:\\GitHub\\wxkk\\python\\T4\\Paired\\underwater_dark\\trainB\\264286_00007889.jpg'  # 替换为你的图像路径
 input_image = cv2.imread(image_path)
 input_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2RGB)
 

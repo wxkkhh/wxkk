@@ -37,7 +37,7 @@ def underwater_image_transformation(image, depth, alpha, beta, Ib):
     return transformed_image
 
 # 加载图片 (替换路径为你的水下图片路径)
-image_path = "d:\\GitHub\\wxkk\\python\\T2\\normal4.jpg"  # 替换为实际图像路径
+image_path = "D:\\GitHub\\wxkk\\python\\T4\\Paired\\underwater_dark\\trainB\\264286_00007889.jpg"  # 替换为实际图像路径
 image = cv2.imread(image_path)
 if image is None:
     raise FileNotFoundError("图像文件未找到，请检查路径！")
