@@ -24,51 +24,61 @@ def restore_color_cast(image):
 def restore_low_light(image):
     # 使用 CLAHE（自适应直方图均衡化）增强亮度
     lab_image = cv2.cvtColor(image, cv2.COLOR_RGB2LAB)
-    clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
+    clahe = cv2.createCLAHE(clipLimit=6.0, tileGridSize=(4, 4))
     lab_image[:, :, 0] = clahe.apply(lab_image[:, :, 0])
     restored_image = cv2.cvtColor(lab_image, cv2.COLOR_LAB2RGB)
     return restored_image
 
-# 模糊复原方案（使用去雾算法）
+# # 模糊复原方案（使用去雾算法）
+# def restore_blur(image):
+#     # 使用暗通道先验去雾算法进行模糊复原
+#     def get_dark_channel(image, size=15):
+#         min_channel = np.amin(image, axis=2).astype(np.uint8)
+#         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (size, size))
+#         dark_channel = cv2.erode(min_channel, kernel)
+#         return dark_channel
+
+#     def get_atmospheric_light(image, dark_channel):
+#         num_pixels = dark_channel.size
+#         num_brightest = int(max(num_pixels * 0.001, 1))
+#         flat_dark = dark_channel.flatten()
+#         flat_image = image.reshape((-1, 3))
+#         indices = np.argpartition(flat_dark, -num_brightest)[-num_brightest:]
+#         atmospheric_light = np.mean(flat_image[indices], axis=0)
+#         return atmospheric_light
+
+#     def get_transmission_estimate(image, atmospheric_light, omega=0.95, size=15):
+#         norm_image = image / (atmospheric_light + 1e-6)
+#         transmission = 1 - omega * get_dark_channel(norm_image, size)
+#         return transmission.astype(np.float32)
+
+#     def get_transmission_refine(image, transmission, radius=60):
+#         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
+#         transmission_refined = cv2.ximgproc.guidedFilter(guide=gray, src=transmission, radius=radius, eps=1e-3)
+#         return transmission_refined
+
+#     def recover(image, transmission, atmospheric_light, t0=0.1):
+#         transmission = np.clip(transmission, t0, 1)[:, :, None]
+#         recovered_image = (image - atmospheric_light) / transmission + atmospheric_light
+#         recovered_image = np.clip(recovered_image, 0, 255).astype(np.uint8)
+#         return recovered_image
+
+#     dark_channel = get_dark_channel(image)
+#     atmospheric_light = get_atmospheric_light(image, dark_channel)
+#     transmission_estimate = get_transmission_estimate(image, atmospheric_light)
+#     transmission_refined = get_transmission_refine(image, transmission_estimate)
+#     restored_image = recover(image, transmission_refined, atmospheric_light)
+#     return restored_image
+
+# 模糊复原方案
 def restore_blur(image):
-    # 使用暗通道先验去雾算法进行模糊复原
-    def get_dark_channel(image, size=15):
-        min_channel = np.amin(image, axis=2).astype(np.uint8)
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (size, size))
-        dark_channel = cv2.erode(min_channel, kernel)
-        return dark_channel
-
-    def get_atmospheric_light(image, dark_channel):
-        num_pixels = dark_channel.size
-        num_brightest = int(max(num_pixels * 0.001, 1))
-        flat_dark = dark_channel.flatten()
-        flat_image = image.reshape((-1, 3))
-        indices = np.argpartition(flat_dark, -num_brightest)[-num_brightest:]
-        atmospheric_light = np.mean(flat_image[indices], axis=0)
-        return atmospheric_light
-
-    def get_transmission_estimate(image, atmospheric_light, omega=0.95, size=15):
-        norm_image = image / (atmospheric_light + 1e-6)
-        transmission = 1 - omega * get_dark_channel(norm_image, size)
-        return transmission.astype(np.float32)
-
-    def get_transmission_refine(image, transmission, radius=60):
-        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
-        transmission_refined = cv2.ximgproc.guidedFilter(guide=gray, src=transmission, radius=radius, eps=1e-3)
-        return transmission_refined
-
-    def recover(image, transmission, atmospheric_light, t0=0.1):
-        transmission = np.clip(transmission, t0, 1)[:, :, None]
-        recovered_image = (image - atmospheric_light) / transmission + atmospheric_light
-        recovered_image = np.clip(recovered_image, 0, 255).astype(np.uint8)
-        return recovered_image
-
-    dark_channel = get_dark_channel(image)
-    atmospheric_light = get_atmospheric_light(image, dark_channel)
-    transmission_estimate = get_transmission_estimate(image, atmospheric_light)
-    transmission_refined = get_transmission_refine(image, transmission_estimate)
-    restored_image = recover(image, transmission_refined, atmospheric_light)
+    # 使用拉普拉斯算子进行锐化处理
+    kernel = np.array([[0, -1, 0],
+                       [-1, 5, -1],
+                       [0, -1, 0]])
+    restored_image = cv2.filter2D(image, -1, kernel)
     return restored_image
+
 
 # 偏色检测函数，使用 CIE Lab 色彩空间计算偏色因子 K
 def detect_color_cast(image):
